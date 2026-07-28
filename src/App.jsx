@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import {
-  ArrowDown, ArrowRight, ArrowUpRight, Award, BookOpen, Code2,
-  ExternalLink, Github, GraduationCap, Linkedin, Mail, Menu, Play, X,
+  ArrowDown, ArrowRight, ArrowUpRight, Award, BookOpen, Camera, Code2,
+  Database, ExternalLink, Eye, Gauge, Github, GraduationCap, Images,
+  Linkedin, Mail, Menu, Play, ShieldCheck, X,
 } from 'lucide-react'
 import { featuredProducts, links, projects, publications, skillGroups } from './data'
 
@@ -100,7 +101,7 @@ function Home() {
       <section className="home-hero shell">
         <div className="hero-copy">
           <span className="eyebrow live"><i/> Software engineer · AI builder</span>
-          <h1>I build systems<br/>that <em>think,</em><br/>scale & ship.</h1>
+          <h1>Think<br/>More <em>To</em><br/>Add Value.</h1>
           <p>Full-stack engineer working at the intersection of AI, product engineering, and computer vision—turning ambitious ideas into reliable software.</p>
           <div className="hero-actions">
             <Link className="button dark" to="/projects">Explore my work <ArrowRight/></Link>
@@ -135,7 +136,7 @@ function Home() {
               <h3>{product.name}</h3>
               <p>{product.description}</p>
               <div className="chips">{product.stack.map(tag => <span key={tag}>{tag}</span>)}</div>
-              {product.link ? <a href={product.link} target="_blank" rel="noreferrer">Visit product <ArrowUpRight/></a> : <span className="quiet-link">Case study coming soon</span>}
+              {product.link ? <a href={product.link} target="_blank" rel="noreferrer">{product.cta ?? 'Explore'} <ArrowUpRight/></a> : <span className="quiet-link">Case study coming soon</span>}
             </article>
           ))}
         </div>
@@ -199,10 +200,14 @@ function ProjectRow({ project, number }) {
             <div className="project-meta">
               <span>{project.year}</span>
               <i/>
-              <a href={project.url} target="_blank" rel="noreferrer">{project.urlLabel} <ExternalLink/></a>
+              {project.url
+                ? <a href={project.url} target="_blank" rel="noreferrer">{project.urlLabel} <ExternalLink/></a>
+                : <span className="private-label"><ShieldCheck/> {project.urlLabel}</span>}
             </div>
           </div>
-          <a className="project-open" href={project.url} target="_blank" rel="noreferrer" aria-label={`Open ${project.title}`}><ArrowUpRight/></a>
+          {project.caseStudy
+            ? <Link className="project-open" to={project.caseStudy} aria-label={`View ${project.title} case study`}><ArrowRight/></Link>
+            : <a className="project-open" href={project.url} target="_blank" rel="noreferrer" aria-label={`Open ${project.title}`}><ArrowUpRight/></a>}
         </div>
         <div className="chips project-chips">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
         {project.media.length > 0 ? (
@@ -218,6 +223,7 @@ function ProjectRow({ project, number }) {
         <button className="see-more" onClick={() => setExpanded(!expanded)} aria-expanded={expanded}>
           {expanded ? 'Show less' : 'See more'}
         </button>
+        {project.caseStudy && <Link className="case-study-link" to={project.caseStudy}>Explore the architecture case study <ArrowRight/></Link>}
       </div>
     </article>
   )
@@ -271,6 +277,78 @@ function Publications() {
       </main>
     </>
   )
+}
+
+function PosmCaseStudy() {
+  return (
+    <>
+      <PageIntro
+        label="Case study / Applied computer vision"
+        title={<>POSM Audit<br/><em>Pipeline.</em></>}
+        copy="A full-stack research platform that turns retail field photographs into verified detections, visibility measurements, condition scores, and auditable records."
+      />
+      <main className="shell case-study-page">
+        <section className="case-overview">
+          <div>
+            <span className="eyebrow">What it does</span>
+            <h2>Turns a field photo into a clear retail-audit result.</h2>
+            <p>The product checks a retail scene against approved campaign artwork, identifies the intended display among surrounding materials, and returns practical information about placement, visibility, and physical condition.</p>
+          </div>
+          <div className="case-facts">
+            <div><strong>01</strong><span>Target identification</span><small>Find the intended campaign display</small></div>
+            <div><strong>02</strong><span>Visibility assessment</span><small>Understand how much can be seen</small></div>
+            <div><strong>03</strong><span>Condition assessment</span><small>Review physical presentation quality</small></div>
+          </div>
+        </section>
+
+        <section className="capabilities-section">
+          <div className="case-section-head">
+            <div><span className="eyebrow">Product capabilities</span><h2>One audit, four useful outcomes</h2></div>
+            <p>The public case study focuses on what an operator receives, without exposing internal architecture or decision logic.</p>
+          </div>
+          <div className="capability-grid">
+            <article><Camera/><span>01</span><h3>Campaign identification</h3><p>Locates the approved campaign display even when several unrelated boards appear in the same field photo.</p></article>
+            <article><Eye/><span>02</span><h3>Visibility result</h3><p>Reports whether the display is clear, partly blocked, or uncertain, with an understandable visibility result.</p></article>
+            <article><Gauge/><span>03</span><h3>Condition result</h3><p>Summarizes cleanliness, integrity, color, alignment, and exposure into an operator-friendly assessment.</p></article>
+            <article><Database/><span>04</span><h3>Reviewable audit</h3><p>Keeps the source evidence and structured result together so previous audits can be reviewed consistently.</p></article>
+          </div>
+        </section>
+
+        <section className="output-section">
+          <div className="case-section-head">
+            <div><span className="eyebrow">What it returns</span><h2>Outputs made for decisions</h2></div>
+            <p>Results are designed to help a reviewer understand what was found and what action may be needed.</p>
+          </div>
+          <div className="output-grid">
+            <article className="output-card coral-output"><Images/><small>Detection output</small><h3>Verified placement</h3><p>An annotated field image identifies the intended display and its location in the scene.</p><strong>FOUND / NOT FOUND</strong></article>
+            <article className="output-card blue-output"><Eye/><small>Visibility output</small><h3>Exposure assessment</h3><p>A clear percentage—or a cautious range when the scene is ambiguous—describes how much of the display is visible.</p><strong>VISIBLE %</strong></article>
+            <article className="output-card lime-output"><Gauge/><small>Condition output</small><h3>Presentation quality</h3><p>Five understandable categories and an overall score summarize the display’s physical condition.</p><strong>0—100</strong></article>
+          </div>
+        </section>
+
+        <section className="evidence-section">
+          <div className="case-section-head">
+            <div><span className="eyebrow">Visual evidence</span><h2>Detection in practice</h2></div>
+            <p>The example shows the safe, user-facing journey from approved reference and field photo to the final highlighted result.</p>
+          </div>
+          <div className="evidence-grid">
+            <figure><img src="/projects/posm-master.jpg" alt="Approved POSM master artwork"/><figcaption><span>01</span><div><strong>Approved reference</strong><small>The campaign artwork the operator wants to find.</small></div></figcaption></figure>
+            <figure><img src="/projects/posm-field-scene.jpg" alt="Retail field scene containing three different display boards"/><figcaption><span>02</span><div><strong>Unstructured field scene</strong><small>Multiple competing display boards create a realistic retrieval challenge.</small></div></figcaption></figure>
+            <figure><img src="/projects/posm-verified-scene.jpg" alt="Target POSM verified among three display boards"/><figcaption><span>03</span><div><strong>Final output</strong><small>The intended campaign display is highlighted for review.</small></div></figcaption></figure>
+          </div>
+        </section>
+
+        <section className="case-close">
+          <div><span className="eyebrow">Project summary</span><h2>Retail evidence, made easier to review.</h2><p>POSM Audit Pipeline helps teams move from manual photo inspection to consistent, visual, and structured audit outcomes.</p></div>
+          <Link className="button dark back-projects" to="/projects">Back to all projects <ArrowLeftIcon/></Link>
+        </section>
+      </main>
+    </>
+  )
+}
+
+function ArrowLeftIcon() {
+  return <ArrowRight style={{ transform: 'rotate(180deg)' }}/>
 }
 
 function About() {
@@ -330,6 +408,7 @@ export default function App() {
   }), [pathname])
   const page = pathname === '/' ? <Home/>
     : pathname === '/projects' ? <Projects/>
+    : pathname === '/projects/posm-pipeline' ? <PosmCaseStudy/>
     : pathname === '/publications' ? <Publications/>
     : pathname === '/about' ? <About/>
     : <NotFound/>

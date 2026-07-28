@@ -14,6 +14,7 @@ export const featuredProducts = [
     description: 'Production AI inference with secure authentication, subscriptions, async job processing, payment callbacks, and end-to-end usage observability.',
     stack: ['Next.js', 'Node.js', 'PostgreSQL', 'RabbitMQ'],
     link: 'https://marshalmind.com/',
+    cta: 'Visit product',
     tone: 'coral',
   },
   {
@@ -22,6 +23,8 @@ export const featuredProducts = [
     label: 'Multimodal KYC',
     description: 'A liveness and anti-spoofing platform that combines gesture, voice CAPTCHA, AV-sync, identity matching, and passive liveness.',
     stack: ['React Native', 'FastAPI', 'PyTorch', 'CUDA'],
+    link: 'https://youtube.com/shorts/6XHrzJvtMOc?si=H6Q46hzvW5lBes_z',
+    cta: 'Watch video',
     tone: 'lime',
   },
   {
@@ -35,6 +38,35 @@ export const featuredProducts = [
 ]
 
 export const projects = [
+  {
+    id: 'posm-pipeline',
+    title: 'POSM Audit Pipeline',
+    subtitle: 'Retail Computer Vision & Research Platform',
+    year: '2026',
+    category: 'AI & vision',
+    urlLabel: 'Private research repository',
+    caseStudy: '/projects/posm-pipeline',
+    tags: ['Computer Vision', 'Retail Audit', 'Visibility', 'Condition Scoring', 'Dashboard'],
+    description: 'A retail-audit system that turns field photographs into useful evidence. It identifies the intended campaign display, reports how visible it is, scores its physical condition, and keeps a reviewable record of each audit.',
+    media: [
+      { image: '/projects/posm-detection-result.jpg', href: '/projects/posm-detection-result.jpg', label: 'Open-vocabulary candidate detection' },
+      { image: '/projects/posm-verified-scene.jpg', href: '/projects/posm-verified-scene.jpg', label: 'Master-guided target verification' },
+    ],
+  },
+  {
+    id: 'livemarshal',
+    title: 'LiveMarshal',
+    subtitle: 'Multimodal KYC & Anti-Spoofing',
+    year: 'AI product',
+    category: 'AI & vision',
+    url: 'https://youtube.com/shorts/6XHrzJvtMOc?si=H6Q46hzvW5lBes_z',
+    urlLabel: 'youtube.com/shorts/6XHrzJvtMOc',
+    tags: ['React Native', 'FastAPI', 'PyTorch', 'CUDA'],
+    description: 'A multimodal KYC liveness and anti-spoofing platform combining gesture challenges, voice CAPTCHA, audio-video synchronization, identity matching, and passive liveness. The broader pipeline uses Expo, MediaPipe, faster-whisper, OpenCV, FFmpeg, Docker, and Nginx.',
+    media: [
+      { image: 'https://i.ytimg.com/vi/6XHrzJvtMOc/hqdefault.jpg', href: 'https://youtube.com/shorts/6XHrzJvtMOc?si=H6Q46hzvW5lBes_z', label: 'Watch the LiveMarshal liveness demo', video: true },
+    ],
+  },
   {
     id: 'tracking-init',
     title: '@hajiracm/tracking-init',
